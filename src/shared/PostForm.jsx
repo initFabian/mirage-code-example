@@ -1,5 +1,5 @@
 import { Box, Button, Flex } from "rebass/styled-components";
-import { Label, Input } from "@rebass/forms/styled-components";
+import { Label, Input, Textarea } from "@rebass/forms/styled-components";
 import { useForm } from "react-hook-form";
 import Loader from "react-loader-spinner";
 
@@ -18,7 +18,7 @@ export const PostForm = ({ defaultValues, onFormSubmit, isLoading }) => {
       </Box>
       <Box sx={{ marginBottom: 3 }}>
         <Label htmlFor="content">Content</Label>
-        <Input ref={register} id="content" name="content" type="text" />
+        <Textarea ref={register} id="content" name="content" type="text" />
       </Box>
       <Button variant="primary" mr={2}>
         {isLoading ? (

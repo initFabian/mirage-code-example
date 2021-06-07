@@ -55,7 +55,7 @@ export const PostDetailView = () => {
           </Flex>
           <Link to={`/post/${id}/update`}>
             <Button variant="outline" color="secondary">
-              Update
+              Edit
             </Button>
           </Link>
         </Flex>

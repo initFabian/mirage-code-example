@@ -57,22 +57,10 @@ export const UpdatePost = () => {
         }}
       >
         <Heading sx={{ marginBottom: 3 }}>Update Post</Heading>
-        <h1>{data.title}</h1>
-        <p>{data.content}</p>
-        <ul>
-          {data.comments?.map((c, idx) => (
-            <li key={idx}>{c.text}</li>
-          ))}
-        </ul>
         <PostForm
           defaultValues={data}
           onFormSubmit={onFormSubmit}
           isLoading={isMutating}
-        />
-        <CommentForm
-          defaultValues={data}
-          onFormSubmit={onCommentSubmit}
-          isLoading={isCommentLoading}
         />
       </Box>
     </Container>
