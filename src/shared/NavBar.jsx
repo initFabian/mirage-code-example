@@ -1,10 +1,4 @@
-import {
-  Flex,
-  Text,
-  Box,
-  Link as StyledLink,
-  Image,
-} from "rebass/styled-components";
+import { Flex, Box, Link as StyledLink, Image } from "rebass/styled-components";
 import { Link } from "react-router-dom";
 import { Container } from "./Container";
 import logo from "./logo.svg";

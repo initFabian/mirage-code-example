@@ -65,22 +65,7 @@ export function makeServer({ environment = "test" }) {
 
     routes() {
       this.get("/api/posts", function (schema, request) {
-        const { pageOffset, pageSize } = request.queryParams;
-
         const { posts } = schema.db;
-
-        if (Number(pageSize)) {
-          const start = Number(pageSize) * Number(pageOffset);
-          const end = start + Number(pageSize);
-          const page = posts.slice(start, end);
-
-          return {
-            items: page,
-            nextPageOffset:
-              posts.length > end ? Number(pageOffset) + 1 : undefined,
-          };
-        }
-
         return posts;
       });
 

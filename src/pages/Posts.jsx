@@ -55,7 +55,7 @@ export const Posts = () => {
     return (
       <Container>
         <Flex py="5" justifyContent="center">
-          <Loader type="ThreeDots" color="#cccccc" height={30} />;
+          <Loader type="ThreeDots" color="#cccccc" height={30} />
         </Flex>
       </Container>
     );

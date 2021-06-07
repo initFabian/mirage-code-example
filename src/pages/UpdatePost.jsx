@@ -1,7 +1,7 @@
-import { PostForm, CommentForm, Container } from "../shared";
+import { PostForm, Container } from "../shared";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { Box, Heading, Flex } from "rebass/styled-components";
-import { createComment, getPost, updatePost } from "../api";
+import { getPost, updatePost } from "../api";
 import { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 
@@ -12,8 +12,6 @@ export const UpdatePost = () => {
 
   const { data, error, isLoading, isError } = useQuery(["posts", id], getPost);
   const { mutateAsync, isLoading: isMutating } = useMutation(updatePost);
-  const { mutateAsync: newCommentMutate, isLoading: isCommentLoading } =
-    useMutation(createComment);
 
   const onFormSubmit = async (data) => {
     await mutateAsync({ ...data, id });
@@ -21,19 +19,11 @@ export const UpdatePost = () => {
     history.push("/");
   };
 
-  const onCommentSubmit = async (data) => {
-    await newCommentMutate({
-      postId: id,
-      comment: data,
-    });
-    queryClient.invalidateQueries(["posts", id]);
-  };
-
   if (isLoading) {
     return (
       <Container>
         <Flex py="5" justifyContent="center">
-          <Loader type="ThreeDots" color="#cccccc" height={30} />;
+          <Loader type="ThreeDots" color="#cccccc" height={30} />
         </Flex>
       </Container>
     );
