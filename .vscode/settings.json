@@ -12,5 +12,6 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
-  "formattingToggle.affects": ["formatOnPaste", "formatOnSave", "formatOnType"]
+  "formattingToggle.affects": ["formatOnPaste", "formatOnSave", "formatOnType"],
+  "js/ts.implicitProjectConfig.checkJs": false
 }

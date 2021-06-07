@@ -9,7 +9,6 @@ import {
 } from "miragejs";
 import faker from "faker";
 import posts from "./fixtures/posts";
-import _ from "lodash";
 
 export function makeServer({ environment = "test" }) {
   return createServer({
@@ -96,7 +95,6 @@ export function makeServer({ environment = "test" }) {
       });
 
       this.get("/api/posts/:id", function (schema, request) {
-        const id = request.params.id;
         let post = schema.posts.find(request.params.id);
         let json = this.serialize(post, "post-with-comments");
         return json.post;
