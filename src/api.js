@@ -21,6 +21,11 @@ export const createPost = async ({ ...post }) => {
   return data;
 };
 
+export const createComment = async ({ postId, comment }) => {
+  const { data } = await axios.post(`/api/posts/${postId}/comments`, comment);
+  return data;
+};
+
 export const removePost = async (id) => {
   const { data } = await axios.delete(`/api/posts/${id}`);
   return data;

@@ -1,6 +1,6 @@
 import { NavBar } from "./shared/NavBar";
 import { Switch, Route } from "react-router-dom";
-import { PostsList } from "./PostsList";
+import { PostsList } from "./PostsList/PostsList";
 import { CreatePost } from "./CreatePost";
 import { UpdatePost } from "./UpdatePost";
 

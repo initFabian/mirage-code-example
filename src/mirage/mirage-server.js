@@ -1,4 +1,13 @@
-import { createServer, Model } from "miragejs";
+import {
+  RestSerializer,
+  belongsTo,
+  createServer,
+  Factory,
+  hasMany,
+  Model,
+  trait,
+} from "miragejs";
+import faker from "faker";
 import posts from "./fixtures/posts";
 import _ from "lodash";
 
@@ -9,22 +18,54 @@ export function makeServer({ environment = "test" }) {
     fixtures: {
       posts,
     },
-    models: {
-      post: Model,
+
+    serializers: {
+      application: RestSerializer,
+      postWithComments: RestSerializer.extend({
+        include: ["comments"],
+        embed: true,
+      }),
     },
 
+    models: {
+      post: Model.extend({
+        comments: hasMany(),
+      }),
+      comment: Model.extend({
+        post: belongsTo(),
+      }),
+    },
+
+    factories: {
+      comment: Factory.extend({
+        text() {
+          return faker.lorem.sentences(1);
+        },
+      }),
+      post: Factory.extend({
+        title() {
+          return faker.lorem.words(4);
+        },
+        content() {
+          return faker.lorem.paragraph(1);
+        },
+        withComments: trait({
+          afterCreate(post, server) {
+            server.createList("comment", 3, { post });
+          },
+        }),
+      }),
+    },
     seeds(server) {
-      server.loadFixtures();
+      // server.loadFixtures();
+      server.createList("post", 10, "withComments");
     },
 
     routes() {
       this.get("/api/posts", function (schema, request) {
         const { pageOffset, pageSize } = request.queryParams;
 
-        const posts = _.map(schema.db.posts, ({ id, title }) => ({
-          id,
-          title,
-        }));
+        const { posts } = schema.db;
 
         if (Number(pageSize)) {
           const start = Number(pageSize) * Number(pageOffset);
@@ -46,9 +87,19 @@ export function makeServer({ environment = "test" }) {
         return schema.db.posts.insert(attrs);
       });
 
+      this.post("/api/posts/:id/comments", (schema, request) => {
+        let attrs = JSON.parse(request.requestBody);
+        let post = schema.posts.find(request.params.id);
+        post.newComment(attrs);
+        post.save();
+        return attrs;
+      });
+
       this.get("/api/posts/:id", function (schema, request) {
         const id = request.params.id;
-        return this.serialize(schema.posts.find(id)).post;
+        let post = schema.posts.find(request.params.id);
+        let json = this.serialize(post, "post-with-comments");
+        return json.post;
       });
 
       this.patch("/api/posts/:id", function (schema, request) {

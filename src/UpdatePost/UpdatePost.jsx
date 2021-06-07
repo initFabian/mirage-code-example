@@ -1,7 +1,7 @@
-import { PostForm, Container } from "../shared";
+import { PostForm, CommentForm, Container } from "../shared";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { Box, Heading, Flex } from "rebass/styled-components";
-import { getPost, updatePost } from "../api";
+import { createComment, getPost, updatePost } from "../api";
 import { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 
@@ -12,12 +12,21 @@ export const UpdatePost = () => {
 
   const { data, error, isLoading, isError } = useQuery(["posts", id], getPost);
   const { mutateAsync, isLoading: isMutating } = useMutation(updatePost);
+  const { mutateAsync: newCommentMutate, isLoading: isCommentLoading } =
+    useMutation(createComment);
 
   const onFormSubmit = async (data) => {
     await mutateAsync({ ...data, id });
-    queryClient.invalidateQueries(["posts"]);
     queryClient.invalidateQueries(["posts", id]);
     history.push("/");
+  };
+
+  const onCommentSubmit = async (data) => {
+    await newCommentMutate({
+      postId: id,
+      comment: data,
+    });
+    queryClient.invalidateQueries(["posts", id]);
   };
 
   if (isLoading) {
@@ -50,10 +59,20 @@ export const UpdatePost = () => {
         <Heading sx={{ marginBottom: 3 }}>Update Post</Heading>
         <h1>{data.title}</h1>
         <p>{data.content}</p>
+        <ul>
+          {data.comments?.map((c, idx) => (
+            <li key={idx}>{c.text}</li>
+          ))}
+        </ul>
         <PostForm
           defaultValues={data}
           onFormSubmit={onFormSubmit}
           isLoading={isMutating}
+        />
+        <CommentForm
+          defaultValues={data}
+          onFormSubmit={onCommentSubmit}
+          isLoading={isCommentLoading}
         />
       </Box>
     </Container>

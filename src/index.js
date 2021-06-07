@@ -9,7 +9,8 @@ import { HashRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import preset from "@rebass/preset";
 import { makeServer } from "./mirage/mirage-server";
-makeServer({ environment: "development" });
+// @ts-ignore
+global.mirageServer = makeServer({ environment: "development" });
 
 const queryClient = new QueryClient();
 

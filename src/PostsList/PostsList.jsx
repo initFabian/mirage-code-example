@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { getAllPosts } from "../api";
 import { PostItem } from "./PostItem";
 import Loader from "react-loader-spinner";
+import _ from "lodash";
 
 export const PostsList = () => {
   const { data, error, isLoading, isError } = useQuery("posts", getAllPosts);
@@ -25,8 +26,13 @@ export const PostsList = () => {
   return (
     <Container>
       <Flex flexDirection="column" alignItems="center">
-        {data.map(({ content, title, id }) => (
-          <PostItem content={content} title={title} key={id} id={id} />
+        {data.map(({ content, title, id, commentIds }) => (
+          <PostItem
+            content={content}
+            title={`${title} (${_.size(commentIds)} comments)`}
+            key={id}
+            id={id}
+          />
         ))}
       </Flex>
     </Container>
