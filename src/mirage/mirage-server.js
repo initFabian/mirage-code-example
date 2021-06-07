@@ -40,6 +40,9 @@ export function makeServer({ environment = "test" }) {
         text() {
           return faker.lorem.sentences(1);
         },
+        createdAt() {
+          return faker.date.recent();
+        },
       }),
       post: Factory.extend({
         title() {

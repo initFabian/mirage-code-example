@@ -1,3 +1,8 @@
+import { Container } from "../shared";
+import { useQuery } from "react-query";
+import { getAllPosts } from "../api";
+import Loader from "react-loader-spinner";
+import _ from "lodash";
 import {
   Flex,
   Text,
@@ -8,9 +13,8 @@ import {
 import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import { removePost } from "../api";
-import Loader from "react-loader-spinner";
 
-export const PostItem = ({ id, title, content }) => {
+const PostItem = ({ id, title, content }) => {
   const queryClient = useQueryClient();
   const { mutateAsync, isLoading } = useMutation(removePost);
 
@@ -24,7 +28,7 @@ export const PostItem = ({ id, title, content }) => {
       <Flex flexDirection="column" flexGrow={2}>
         <Flex alignItems="center" justifyContent="space-between">
           <Heading fontSize={[2, 3, 4]}>
-            <Link component={StyledLink} to={`/update-post/${id}`} mr="auto">
+            <Link component={StyledLink} to={`/post/${id}`} mr="auto">
               {title}
             </Link>
           </Heading>
@@ -41,5 +45,38 @@ export const PostItem = ({ id, title, content }) => {
         </Text>
       </Flex>
     </Flex>
+  );
+};
+
+export const Posts = () => {
+  const { data, error, isLoading, isError } = useQuery("posts", getAllPosts);
+
+  if (isLoading) {
+    return (
+      <Container>
+        <Flex py="5" justifyContent="center">
+          <Loader type="ThreeDots" color="#cccccc" height={30} />;
+        </Flex>
+      </Container>
+    );
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>;
+  }
+
+  return (
+    <Container>
+      <Flex flexDirection="column" alignItems="center">
+        {data.map(({ content, title, id, commentIds }) => (
+          <PostItem
+            content={content}
+            title={`${title} (${_.size(commentIds)} comments)`}
+            key={id}
+            id={id}
+          />
+        ))}
+      </Flex>
+    </Container>
   );
 };

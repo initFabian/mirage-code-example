@@ -1,4 +1,4 @@
-import { Box, Button } from "rebass/styled-components";
+import { Box, Button, Flex } from "rebass/styled-components";
 import { Label, Input } from "@rebass/forms/styled-components";
 import { useForm } from "react-hook-form";
 import Loader from "react-loader-spinner";
@@ -32,25 +32,33 @@ export const PostForm = ({ defaultValues, onFormSubmit, isLoading }) => {
 };
 
 export const CommentForm = ({ defaultValues, onFormSubmit, isLoading }) => {
-  const { register, handleSubmit } = useForm({ defaultValues });
+  const { register, handleSubmit, reset } = useForm({ defaultValues });
 
-  const onSubmit = handleSubmit((data) => {
-    onFormSubmit(data);
+  const onSubmit = handleSubmit(async (data) => {
+    await onFormSubmit(data);
+    reset();
   });
 
   return (
     <form onSubmit={onSubmit}>
-      <Box sx={{ marginBottom: 3 }}>
-        <Label htmlFor="text">Leave Comment</Label>
-        <Input ref={register} id="text" name="text" type="text" />
-      </Box>
-      <Button variant="primary" mr={2}>
-        {isLoading ? (
-          <Loader type="ThreeDots" color="#fff" height={10} />
-        ) : (
-          "Submit"
-        )}
-      </Button>
+      <Flex width="100%" alignItems="flex-end">
+        <Box flexGrow={1}>
+          <Input
+            ref={register}
+            id="text"
+            name="text"
+            type="text"
+            placeholder="Leave Comment"
+          />
+        </Box>
+        <Button variant="primary" ml={4}>
+          {isLoading ? (
+            <Loader type="ThreeDots" color="#fff" height={10} />
+          ) : (
+            "Submit"
+          )}
+        </Button>
+      </Flex>
     </form>
   );
 };
