@@ -7,7 +7,8 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { HashRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import preset from "@rebass/preset";
-import { makeServer } from "./mirage/mirage-server";
+// import { makeServer } from "./mirage/mirage-server";
+import { makeServer } from "./mirage/stage-playground";
 
 global.mirageServer = makeServer({ environment: "development" });
 

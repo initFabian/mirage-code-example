@@ -92,9 +92,8 @@ export function makeServer({ environment = "test" }) {
         let id = request.params.id;
         let attrs = JSON.parse(request.requestBody);
 
-        const data = schema.posts.find(id).update(attrs);
-        data.save();
-        return this.serialize(data).post;
+        const data = schema.db.posts.update(id, attrs);
+        return data;
       });
 
       this.delete("/api/posts/:id", (schema, request) => {
@@ -102,7 +101,7 @@ export function makeServer({ environment = "test" }) {
         return schema.posts.find(id).destroy();
       });
 
-      this.passthrough();
+      this.passthrough((request) => !request.url.includes("/api/posts"));
     },
   });
 }
