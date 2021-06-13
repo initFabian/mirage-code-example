@@ -1,13 +1,27 @@
 // mirage/mirage-server.js
-import { createServer } from "miragejs";
-import posts from "./fixtures/posts";
+import { createServer, Factory } from "miragejs";
+import faker from "faker";
 
 export function makeServer({ environment = "test" }) {
   return createServer({
     environment,
 
-    fixtures: {
-      posts,
+    factories: {
+      post: Factory.extend({
+        title() {
+          return faker.lorem.words(4);
+        },
+        content() {
+          return faker.lorem.paragraph(1);
+        },
+        createdAt() {
+          return faker.date.recent();
+        },
+      }),
+    },
+
+    seeds(server) {
+      server.createList("post", 2);
     },
 
     routes() {
