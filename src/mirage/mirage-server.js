@@ -86,6 +86,16 @@ export function makeServer({ environment = "test" }) {
         return schema.db.posts.remove(id);
       });
 
+      this.post("/api/posts/:id/comments", (schema, request) => {
+        let attrs = {
+          ...JSON.parse(request.requestBody),
+          createdAt: new Date().toISOString(),
+        };
+        let post = schema.posts.find(request.params.id);
+        post.createComment(attrs);
+        return post;
+      });
+
       this.passthrough((request) => !request.url.includes("/api/posts"));
     },
   });
