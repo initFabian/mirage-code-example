@@ -2,13 +2,13 @@ import axios from "axios";
 
 export const getAllPosts = async () => {
   const { data } = await axios.get(`/api/posts`);
-  return data;
+  return data.posts;
 };
 
 export const getPost = async ({ queryKey }) => {
-  const [_key, id] = queryKey;
+  const [, id] = queryKey;
   const { data } = await axios.get(`/api/posts/${id}`);
-  return data;
+  return data.post;
 };
 
 export const updatePost = async ({ id, ...changes }) => {

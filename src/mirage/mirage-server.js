@@ -1,12 +1,43 @@
 // mirage/mirage-server.js
-import { createServer, Factory } from "miragejs";
+import {
+  createServer,
+  Model,
+  Factory,
+  hasMany,
+  belongsTo,
+  RestSerializer,
+} from "miragejs";
 import faker from "faker";
 
 export function makeServer({ environment = "test" }) {
   return createServer({
     environment,
 
+    models: {
+      post: Model.extend({
+        comments: hasMany(),
+      }),
+      comment: Model.extend({
+        post: belongsTo(),
+      }),
+    },
+
+    serializers: {
+      post: RestSerializer.extend({
+        include: ["comments"],
+        embed: true,
+      }),
+    },
+
     factories: {
+      comment: Factory.extend({
+        text() {
+          return faker.lorem.sentences(1);
+        },
+        createdAt() {
+          return faker.date.recent();
+        },
+      }),
       post: Factory.extend({
         title() {
           return faker.lorem.words(4);
@@ -17,6 +48,9 @@ export function makeServer({ environment = "test" }) {
         createdAt() {
           return faker.date.recent();
         },
+        afterCreate(post, server) {
+          server.createList("comment", 3, { postId: post.id });
+        },
       }),
     },
 
@@ -26,12 +60,11 @@ export function makeServer({ environment = "test" }) {
 
     routes() {
       this.get("/api/posts", function (schema, request) {
-        const { posts } = schema.db;
-        return posts;
+        return schema.posts.all();
       });
 
       this.get("/api/posts/:id", function (schema, request) {
-        let post = schema.db.posts.find(request.params.id);
+        let post = schema.posts.find(request.params.id);
         return post;
       });
 

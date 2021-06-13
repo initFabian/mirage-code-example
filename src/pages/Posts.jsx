@@ -68,10 +68,10 @@ export const Posts = () => {
   return (
     <Container>
       <Flex flexDirection="column" alignItems="center">
-        {data.map(({ content, title, id, commentIds }) => (
+        {data.map(({ content, title, id, comments }) => (
           <PostItem
             content={content}
-            title={`${title} (${_.size(commentIds)} comments)`}
+            title={`${title} (${_.size(comments)} comments)`}
             key={id}
             id={id}
           />
