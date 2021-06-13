@@ -17,6 +17,7 @@ export const CreatePost = () => {
       <Box
         sx={{
           py: 3,
+          px: 3,
         }}
       >
         <Heading sx={{ marginBottom: 3 }}>Create New Post</Heading>

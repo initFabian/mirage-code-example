@@ -29,6 +29,11 @@ export function makeServer({ environment = "test" }) {
         return data;
       });
 
+      this.post("/api/posts", (schema, request) => {
+        let newPost = JSON.parse(request.requestBody);
+        return schema.db.posts.insert(newPost);
+      });
+
       this.passthrough((request) => !request.url.includes("/api/posts"));
     },
   });
