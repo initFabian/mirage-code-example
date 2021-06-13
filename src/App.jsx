@@ -5,6 +5,10 @@ import { CreatePost } from "./pages/CreatePost";
 import { UpdatePost } from "./pages/UpdatePost";
 import { PostDetailView } from "./pages/PostDetailView";
 
+import { makeServer } from "./mirage/mirage-server";
+
+global.mirageServer = makeServer({ environment: "development" });
+
 function App() {
   return (
     <div style={{ margin: 0 }}>
