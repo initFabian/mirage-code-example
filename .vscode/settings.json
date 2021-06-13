@@ -13,5 +13,25 @@
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
   "formattingToggle.affects": ["formatOnPaste", "formatOnSave", "formatOnType"],
-  "js/ts.implicitProjectConfig.checkJs": false
+  "js/ts.implicitProjectConfig.checkJs": false,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    ".vscode": true,
+    "node_modules": true,
+    "public": true,
+    "package*": true,
+    "yarn.lock": true,
+    ".*": true,
+    "*.md": true,
+    "src/reportWebVitals.js": true,
+    "src/setupTests.js": true,
+    "src/mirage/stage-playground.js": true,
+    "src/shared": true,
+    "src/mirage": true,
+    "src/index.js": true
+  }
 }

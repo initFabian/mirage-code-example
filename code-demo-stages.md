@@ -246,6 +246,8 @@ export function makeServer({ environment = "test" }) {
 
 ### Stage 6 - Factories
 
+- Talk about traits
+
 ```js
 export function makeServer({ environment = "test" }) {
   return createServer({
@@ -266,9 +268,14 @@ export function makeServer({ environment = "test" }) {
         createdAt() {
           return faker.date.recent();
         },
-        type() {
-          return faker.random.arrayElement(["text", "video"]);
-        },
+
+        video: trait({
+          type: 'video'
+        })
+
+        text: trait({
+          type: 'video'
+        })
       }),
     },
 
@@ -282,3 +289,29 @@ export function makeServer({ environment = "test" }) {
   });
 }
 ```
+
+---
+
+### Stage 7 - Relationships
+
+- Introduce the comments model
+- `afterCreate`
+- have response have `commentIds`
+- Talk about the conventions that mirage uses
+- create endpoints for comments
+
+```js
+// create the models for post and comment
+```
+
+---
+
+### Stage 8 - Serializers
+
+- include comments model within the post JSON
+
+---
+
+### Next steps:
+
+1. showing more documentation like the many ways to [update a model](https://miragejs.com/api/classes/db-collection/#update)

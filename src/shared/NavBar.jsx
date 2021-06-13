@@ -10,7 +10,7 @@ export const NavBar = () => {
         <Flex px={2} width="100%" alignItems="center">
           <Image size={20} src={logo} />
           <Link component={StyledLink} variant="nav" to="/">
-            React Query CRUD
+            Fabian's Blog
           </Link>
           <Box mx="auto" />
           <Link component={StyledLink} variant="nav" to="/create-post">
