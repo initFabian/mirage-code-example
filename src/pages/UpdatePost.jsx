@@ -44,6 +44,7 @@ export const UpdatePost = () => {
       <Box
         sx={{
           py: 3,
+          px: 3,
         }}
       >
         <Heading sx={{ marginBottom: 3 }}>Update Post</Heading>

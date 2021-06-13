@@ -21,6 +21,14 @@ export function makeServer({ environment = "test" }) {
         return post;
       });
 
+      this.patch("/api/posts/:id", function (schema, request) {
+        let id = request.params.id;
+        let changes = JSON.parse(request.requestBody);
+
+        const data = schema.db.posts.update(id, changes);
+        return data;
+      });
+
       this.passthrough((request) => !request.url.includes("/api/posts"));
     },
   });
