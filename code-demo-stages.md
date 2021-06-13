@@ -200,7 +200,7 @@ export function makeServer({ environment = "test" }) {
 
 ---
 
-### Stage 5 - Deleting a post
+### Stage 6 - Deleting a post
 
 ```js
 export function makeServer({ environment = "test" }) {
@@ -244,7 +244,7 @@ export function makeServer({ environment = "test" }) {
 
 ---
 
-### Stage 6 - Factories
+### Stage 7 - Factories
 
 - Talk about traits
 
@@ -292,7 +292,7 @@ export function makeServer({ environment = "test" }) {
 
 ---
 
-### Stage 7 - Relationships
+### Stage 8 - Relationships
 
 - Introduce the comments model
 - `afterCreate`
@@ -306,7 +306,7 @@ export function makeServer({ environment = "test" }) {
 
 ---
 
-### Stage 8 - Serializers
+### Stage 9 - Serializers
 
 - include comments model within the post JSON
 

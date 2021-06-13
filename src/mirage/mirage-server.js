@@ -34,6 +34,11 @@ export function makeServer({ environment = "test" }) {
         return schema.db.posts.insert(newPost);
       });
 
+      this.delete("/api/posts/:id", (schema, request) => {
+        const id = request.params.id;
+        return schema.db.posts.remove(id);
+      });
+
       this.passthrough((request) => !request.url.includes("/api/posts"));
     },
   });
