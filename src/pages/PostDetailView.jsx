@@ -46,6 +46,7 @@ export const PostDetailView = () => {
       <Box
         sx={{
           py: 3,
+          px: 3,
         }}
       >
         <Flex justifyContent="space-between" alignItems="center">
