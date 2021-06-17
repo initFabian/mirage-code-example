@@ -96,7 +96,7 @@ export function makeServer({ environment = "test" }) {
         return post;
       });
 
-      this.passthrough((request) => !request.url.includes("/api/posts"));
+      this.passthrough();
     },
   });
 }
